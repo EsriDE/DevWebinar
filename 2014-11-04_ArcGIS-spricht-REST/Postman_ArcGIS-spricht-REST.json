@@ -1,0 +1,230 @@
+{
+	"id": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+	"name": "ArcGIS spricht REST",
+	"timestamp": 1415114245774,
+	"order": ["7907f506-a304-24d5-3529-8dceebe0a769",
+	"f9034294-8b82-fcd2-3077-a495bcf88fdb",
+	"04516085-7699-79e2-fdb3-e7ce3dcab02c",
+	"815a3eae-25ff-3019-3311-1ddad3d7edc9",
+	"ddc9d895-a14b-26ce-0307-21793eb1e166",
+	"765b2b75-0b55-ea53-d19b-aa101a81014c"],
+	"requests": [{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "04516085-7699-79e2-fdb3-e7ce3dcab02c",
+		"name": "Add Item",
+		"description": "",
+		"url": "https://www.arcgis.com/sharing/rest/content/users/agsrestwebinar/addItem",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "token",
+			"value": "<token>",
+			"type": "text"
+		},
+		{
+			"key": "url",
+			"value": "http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet",
+			"type": "text"
+		},
+		{
+			"key": "type",
+			"value": "WMS",
+			"type": "text"
+		},
+		{
+			"key": "title",
+			"value": "Vogelschutz",
+			"type": "text"
+		},
+		{
+			"key": "tags",
+			"value": "vogel,schutz",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636208368
+	},
+	{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "765b2b75-0b55-ea53-d19b-aa101a81014c",
+		"name": "Add Item (with WMS metadata)",
+		"description": "",
+		"url": "http://www.arcgis.com/sharing/rest/content/users/<username>/addItem",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "token",
+			"value": "<token>",
+			"type": "text"
+		},
+		{
+			"key": "url",
+			"value": "http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet",
+			"type": "text"
+		},
+		{
+			"key": "type",
+			"value": "WMS",
+			"type": "text"
+		},
+		{
+			"key": "title",
+			"value": "Vogelschutz-POSTMAN",
+			"type": "text"
+		},
+		{
+			"key": "tags",
+			"value": "vogel,schutz",
+			"type": "text"
+		},
+		{
+			"key": "description",
+			"value": "Vogelschutzgebiete - Informationen der Naturschutzverwaltung Rheinland-Pfalz",
+			"type": "text"
+		},
+		{
+			"key": "text",
+			"value": "{\"title\":\"Vogelschutzgebiet\",\"url\":\"http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet\",\"mapUrl\":\"http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet\",\"version\":\"1.3.0\",\"layers\":[{\"name\":\"vogelschutzgebiet\",\"title\":\"Vogelschutzgebiet\",\"legendURL\":\"http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet&version=1.3.0&service=WMS&request=GetLegendGraphic&sld_version=1.1.0&layer=vogelschutzgebiet&format=image/png&STYLE=default\"}],\"copyright\":\"\",
+			\"maxHeight\":3000,\"maxWidth\":3000,\"spatialReferences\":[25832,25831,25833,31466,31467,4326,4258,900913,3857],\"format\":null}",
+			"type": "text"
+		},
+		{
+			"key": "extent",
+			"value": "6.0598,48.9344,8.5129,50.9475",
+			"type": "text"
+		},
+		{
+			"key": "thumbnailURL",
+			"value": "http://map1.naturschutz.rlp.de/service_lanis/mod_wms/wms_getmap.php?mapfile=vogelschutzgebiet&SERVICE=WMS&REQUEST=GetMap&FORMAT=image/png&TRANSPARENT=TRUE&STYLES=&VERSION=1.3.0&LAYERS=vogelschutzgebiet&WIDTH=200&HEIGHT=133&CRS=EPSG:4326&BBOX=48.9344,6.05975,50.9475,8.51291",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636545770
+	},
+	{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "7907f506-a304-24d5-3529-8dceebe0a769",
+		"name": "Generate Token",
+		"description": "",
+		"url": "https://www.arcgis.com/sharing/rest/generateToken",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "username",
+			"value": "<username>",
+			"type": "text"
+		},
+		{
+			"key": "password",
+			"value": "<password>",
+			"type": "text"
+		},
+		{
+			"key": "referer",
+			"value": "http://localhost",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636190918
+	},
+	{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "815a3eae-25ff-3019-3311-1ddad3d7edc9",
+		"name": "Add Comment",
+		"description": "",
+		"url": "https://www.arcgis.com/sharing/rest/content/items/<itemId from User Content>/addComment",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "token",
+			"value": "<token>",
+			"type": "text"
+		},
+		{
+			"key": "comment",
+			"value": "Schönes Item hast du hier!",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636228745
+	},
+	{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "ddc9d895-a14b-26ce-0307-21793eb1e166",
+		"name": "Share Item",
+		"description": "",
+		"url": "https://www.arcgis.com/sharing/rest/content/users/agsrestwebinar/items/a62ddb10db0045da804bcbca6ccc5dd2/share",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "token",
+			"value": "<token>",
+			"type": "text"
+		},
+		{
+			"key": "everyone",
+			"value": "true",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636235087
+	},
+	{
+		"collectionId": "cf8dee1a-a7b8-d71b-2cfe-ba3823c3d5cf",
+		"id": "f9034294-8b82-fcd2-3077-a495bcf88fdb",
+		"name": "User Content",
+		"description": "",
+		"url": "https://www.arcgis.com/sharing/rest/content/users/agsrestwebinar",
+		"method": "POST",
+		"headers": "",
+		"data": [{
+			"key": "f",
+			"value": "json",
+			"type": "text"
+		},
+		{
+			"key": "token",
+			"value": "<token>",
+			"type": "text"
+		}],
+		"dataMode": "params",
+		"timestamp": 0,
+		"version": 2,
+		"time": 1415636199437
+	}]
+}
