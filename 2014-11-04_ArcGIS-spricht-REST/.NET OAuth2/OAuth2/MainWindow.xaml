@@ -1,0 +1,12 @@
+﻿<Window x:Class="OAuth2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="807.941" Width="669.5">
+    <Grid Margin="0,0,2,202">
+        <WebBrowser x:Name="LoginBrowser" HorizontalAlignment="Left" Height="452" Margin="10,10,0,-194" VerticalAlignment="Top" Width="641"/>
+        <TextBox x:Name="SearchString" HorizontalAlignment="Left" Height="32" Margin="10,467,0,-147" TextWrapping="Wrap" Text="Search ArcGIS Online" VerticalAlignment="Top" Width="510" FontSize="16" GotFocus="SearchString_GotFocus"/>
+        <Button x:Name="SearchButton" Content="Search" HorizontalAlignment="Left" Height="32" Margin="525,467,0,-147" VerticalAlignment="Top" Width="126" FontSize="16" Click="SearchButton_Click"/>
+        <ListBox x:Name="SearchResultList" HorizontalAlignment="Left" Height="269" Margin="10,504,0,-197" VerticalAlignment="Top" Width="640"/>
+
+    </Grid>
+</Window>
