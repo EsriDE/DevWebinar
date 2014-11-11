@@ -9,3 +9,5 @@ Aus Zeitgründen wurde im Webinar nicht auf teilweise nötige Metadaten eingegange
 Ein Python-Script, das ein Token generiert, die Server-Inhalte durchgeht und alle Services innerhalb eines Verzeichnisses unter neuem Namen neu veröffentlicht. In Zeilen 137-138 (def serviceInfo) findet ihr voreingestellte Werte, die ihr auf euren Server anpassen könnt. Ganz unten befinden sich einige auskommentierte Zeilen, die den Befehl arcpy.GetParameterAsText() verwenden - diese sind für Script-Tools gedacht, die die Parameter über die Oberfläche von ArcMap einlesen.
 
 === OAuth2 (.NET) ===
+Ein Visual-Studio-Projekt in C#, das die OAuth2-Authentifizierung an einer in ArcGIS Online registrierten Applikation umsetzt. Gegenüber dem im Webinar gezeigten Projekt "Collector Light" wurde es stark vereinfacht, sodass es ohne das Framework "MVVM Lite" auskommt, sondern nur das "ArcGIS .NET Runtime SDK" installiert sein muss.
+Haltet trotzdem die Augen auf nach "Collector Light", denn dieses Projekt wird nach seiner Fertigstellung ebenfalls auf GitHub veröffentlicht!
