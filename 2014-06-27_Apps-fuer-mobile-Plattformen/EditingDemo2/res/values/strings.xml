@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">EditingDemo2</string>
+    <string name="address_text">Adresse</string>
+    <string name="search_meetups_button">Meetups in Bayern</string>
+    <string name="add_meetup_button">Meetup anlegen</string>    
+    <string name="btn_edit_apply">Speichern</string>
+    <string name="btn_edit_discard">Abbrechen</string>
+    
+    <string name="name_text">Adresse</string>
+    <string name="host_text">Host</string>
+    <string name="place_text">Ort</string>
+    <string name="street_text">Straße</string>
+    <string name="plz_text">PLZ</string>
+    <string name="city_text">Stadt</string>
+    <string name="state_text">Land</string>
+    <string name="link_text">Link</string>
+    <string name="source_text">Quelle</string>
+    <string name="start_text">Begin</string>
+    <string name="end_text">Ende</string>
+    
+    <string name="name_value">GeoDev Meet-up</string>
+    <string name="host_value">Esri Deutschland GmbH</string>
+    <string name="place_value">Köln</string>
+    <string name="street_value">Konrad-Adenauer-Ufer 41-45</string>
+    <string name="plz_value">50668</string>
+    <string name="city_value">Köln</string>
+    <string name="state_value">Deutschland</string>
+    <string name="link_value">http://www.meetup.com/GeoDev-Meet-Up-Group-Deutschland/events/166107482/</string>
+    <string name="source_value">Webinar</string>
+    <string name="start_value">20.11.2014</string>
+    <string name="end_value">20.11.2014</string>
+</resources>

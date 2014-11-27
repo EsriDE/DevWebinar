@@ -1,0 +1,33 @@
+{
+
+  "widgetOnScreen": {
+    "widgets": [{
+      "position": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "height": 44
+      }
+    },{
+      "position": {
+        "left": 0,
+        "right": 0,
+        "bottom": 0,
+        "height": 24
+      }
+    },{
+      "position": {
+        "left": 0,
+        "top": 44,
+        "bottom": 24
+      }
+    }, {
+      "position": {
+        "left": 45,
+        "top": 45,
+        "width": 430,
+        "height": 410
+      }
+    }]
+  }
+}

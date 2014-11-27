@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edit</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
+  <!-- Karte soll kompletten Bildschirm füllen -->
+  <style>
+    html, body, #mapDiv{
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+  </style>
+  <script src="http://js.arcgis.com/3.9/"></script>
+  <script>
+
+    require(["esri/map",
+      "esri/layers/FeatureLayer",
+      "dojo/parser",
+      "dojo/_base/array",
+      "esri/dijit/editing/Editor",
+      "esri/tasks/locator",
+      "esri/dijit/Geocoder",
+      "esri/geometry/webMercatorUtils",
+      "esri/graphic",
+      "esri/InfoTemplate",
+      "esri/dijit/Directions",
+      "esri/layers/ArcGISDynamicMapServiceLayer",
+      "esri/tasks/GeometryService",
+      "esri/tasks/BufferParameters",
+      "esri/symbols/SimpleLineSymbol",
+      "esri/symbols/SimpleFillSymbol",
+      "esri/Color",
+      "esri/tasks/ServiceAreaTask",
+      "esri/tasks/ServiceAreaParameters",
+      "esri/tasks/FeatureSet",
+	  "esri/IdentityManager",
+      "dijit/layout/ContentPane",
+      "dijit/TitlePane",
+      "dojo/domReady!"], function(Map, FeatureLayer, parser, arrayUtils, Editor, Locator, Geocoder, webMercatorUtils,
+        Graphic, InfoTemplate, Directions, ArcGISDynamicMapServiceLayer, GeometryService, BufferParameters,
+        SimpleLineSymbol, SimpleFillSymbol, Color, ServiceAreaTask, ServiceAreaParameters, FeatureSet) {
+      
+        // Wird benötigt da dojo-Module im HTML-Baum
+        parser.parse();
+        
+        // Karte mit Topographic Basemap von ArcGIS Online initialisieren
+        var map = new Map("mapDiv", {
+          basemap: "topo",
+          center: [10, 51], // longitude, latitude
+          zoom: 6
+        });
+
+        // Wenn die Methode addLayers der Karte ausgeführt wurde, wird die Funktion initEditor aufgerufen
+        map.on("layers-add-result", initEditor);
+       
+        // FeatureLayer initialisieren und zur Karte hinzufügen
+        var bundesligaLayer = new FeatureLayer("http://services2.arcgis.com/tISIjAqoejGPFbAF/arcgis/rest/services/Bundesliga/FeatureServer/0", {
+          mode: FeatureLayer.SNAPSHOT,
+          outFields:["*"]
+        });
+        map.addLayers([bundesligaLayer]);
+
+        // Layer mit Verkehrsdaten von ArcGIS Online zur Karte hinzufügen (ArcGIS Online Named User oder Developer Account wird benötigt)
+        var trafficLayer = new ArcGISDynamicMapServiceLayer("http://traffic.arcgis.com/arcgis/rest/services/World/Traffic/MapServer");
+        map.addLayer(trafficLayer);
+
+        // Adresssuche initialisieren
+        geocoder = new Geocoder({ 
+          map: map 
+        }, "Geocoder");
+        geocoder.startup(); 
+
+        // Locator für rückwärtige Adresssuche initialisieren
+        var locator = new Locator("http://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
+        // Callback für rückwärtiger Adresssuche (hier landet das Ergebnis)
+        locator.on("location-to-address-complete", function(evt) {
+          var infoTemplate = new InfoTemplate("Adresse", "${Address}");
+          if (evt.address.address) {
+            var address = evt.address.address;
+            var location = webMercatorUtils.geographicToWebMercator(evt.address.location);
+            var graphic = new Graphic(location, null, address, infoTemplate);
+            
+            // InfoWindow mit Adressinformation konfigurieren
+            map.infoWindow.setTitle(graphic.getTitle());
+            map.infoWindow.setContent(graphic.getContent());
+            //InfoWindow auf Karten anzeigen
+            var screenPnt = map.toScreen(location);
+            map.infoWindow.resize(200,100);
+            map.infoWindow.show(screenPnt, map.getInfoWindowAnchor(screenPnt));
+          }
+        });
+
+        // Task für GeometryService initialisieren
+        var gsvc = new GeometryService("http://tasks.arcgisonline.com/ArcGIS/rest/services/Geometry/GeometryServer");
+        // Callback für Buffer-Methode (hier landet das Ergebnis)
+        gsvc.on("buffer-complete", function(evt) {
+          var symbol = new SimpleFillSymbol(
+          SimpleFillSymbol.STYLE_SOLID,
+          new SimpleLineSymbol(
+            SimpleLineSymbol.STYLE_SOLID,
+            new Color([255,0,0,0.65]), 2
+          ),
+          new Color([255,0,0,0.35])
+          );
+          // Schleife über alle Geometrien des Buffer-Ergebnis
+          arrayUtils.forEach(evt.geometries, function(geometry) {
+            var graphic = new Graphic(geometry, symbol);
+            // Ergebnis in Karte zeichnen
+            map.graphics.add(graphic);
+          });
+        });
+
+        // Task für ServiceArea-Aufruf initialisieren (ArcGIS Online Named User oder Developer Account wird benötigt)
+        var serviceAreaTask = new ServiceAreaTask("https://route.arcgis.com/arcgis/rest/services/World/ServiceAreas/NAServer/ServiceArea_World");
+        // Callback für ServiceArea Task (hier landet das Ergebnis)
+        serviceAreaTask.on("solve-complete", function(evt) {
+          var polygonSymbol = new SimpleFillSymbol(
+            "solid",  
+            new SimpleLineSymbol("solid", new Color([238,93,48]), 2),
+            new Color([238,93,48,0.5])
+          );
+          // Schleife über alle Polygone des Ergebnis
+          arrayUtils.forEach(evt.result.serviceAreaPolygons, function(serviceArea){
+            serviceArea.setSymbol(polygonSymbol);
+            // Ergebnis in Karte zeichnen
+            map.graphics.add(serviceArea);
+          });
+        });
+
+        // Auf Klick-Event der Karte reagieren
+        map.on("click", function(evt) {
+          // Adresssuche auf Position des Klicks ausführen 
+          locator.locationToAddress(webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100);
+
+          // Puffer mit 1500m berechnen
+          var params = new BufferParameters();
+          params.distances = [ 1500 ];
+          params.bufferSpatialReference = map.spatialReference;
+          params.outSpatialReference = map.spatialReference;
+          params.unit = GeometryService.UNIT_METER;
+          params.geodesic = true;
+          params.geometries = [ evt.mapPoint ];
+          gsvc.buffer(params);
+
+          // Drive-Time-Polygon mit 5 Minuten berechnen
+          var params = new ServiceAreaParameters();
+          params.defaultBreaks= [5];
+          params.outSpatialReference = map.spatialReference;
+          params.returnFacilities = false;
+          var location = new Graphic(evt.mapPoint, null);
+          var features = [];
+          features.push(location);
+          var facilities = new FeatureSet();
+          facilities.features = features;
+          params.facilities = facilities;
+          serviceAreaTask.solve(params);
+
+        });
+
+        // Routing Widget initialisieren (ArcGIS Online Named User oder Developer Account wird benötigt)
+        var directions = new Directions({
+          map: map
+        },"dirDiv");
+        directions.startup();
+
+        // Editor Widget initialisieren (wird nach Event layers-add-result der Karte aufgerufen)
+        function initEditor(evt) {
+          // alle Layer die bei addLayers hinzugefügt wurden
+          var layers = arrayUtils.map(evt.layers, function(result) {
+            return { featureLayer: result.layer };
+          });
+          var settings = {
+            map: map,
+            layerInfos: layers,
+            toolbarVisible: true
+          };
+
+          var params = {settings: settings};    
+          var myEditor = new Editor(params,'editDiv');    
+          myEditor.startup();
+        }
+      });
+  </script>
+
+</head>
+<body class="claro">
+  <div id="mapDiv"> <!-- Container für Karte -->
+    <div style="position:absolute; right:20px; top:50px; z-Index:999;">
+      <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Route', closable:false,  open:false">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left'" style="width:380px; overflow:auto;">
+          <div id="dirDiv"></div> <!-- Container für Routing -->
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; right:20px; top:10px; z-Index:999;">
+      <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Edit', closable:false,  open:true">
+        <div data-dojo-type="dijit/layout/ContentPane" data-dojo-props="region:'left'" style="width:380px; height:250px; overflow:auto;">
+          <div id="editDiv"></div> <!-- Container für Editing -->
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; left:74px; top:20px; z-Index:50;">
+      <div id="Geocoder"></div> <!-- Container für Adresssuche -->
+    </div>
+  </div>
+</body>
+</html>

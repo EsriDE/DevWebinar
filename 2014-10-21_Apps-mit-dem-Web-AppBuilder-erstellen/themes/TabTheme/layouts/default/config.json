@@ -1,0 +1,85 @@
+{
+  "widgetOnScreen": {
+    "widgets": [{
+      "uri": "themes/TabTheme/widgets/Header/Widget",
+      "positionRelativeTo": "browser",
+      "position": {
+        "left": 0,
+        "top": 0,
+        "right": 0,
+        "height": 44
+      }
+    },{
+      "uri": "themes/TabTheme/widgets/Footer/Widget",
+      "positionRelativeTo": "browser",
+      "position": {
+        "left": 0,
+        "right": 0,
+        "bottom": 0,
+        "height": 24
+      }
+    },{
+      "uri": "themes/TabTheme/widgets/SidebarController/Widget",
+      "positionRelativeTo": "browser",
+      "position": {
+        "left": 0,
+        "top": 44,
+        "bottom": 24
+      }
+    }, {
+      "uri": "widgets/HomeButton/Widget",
+      "position": {
+        "left": 7,
+        "top": 75
+      }
+    }, {
+      "label": "Select a basemap",
+      "uri": "widgets/BasemapGallery/Widget",
+      "position": {
+        "right": 60,
+        "top": 45,
+        "width": 430,
+        "height": 410
+      }
+    }, {
+      "uri": "widgets/AttributeTable/Widget"
+    }]
+  },
+
+  "widgetPool": {
+    "panel": {
+      "uri": "themes/TabTheme/panels/TabPanel/Panel",
+      "positionRelativeTo": "browser",
+      "position": {
+        "top": 44,
+        "left": 0,
+        "bottom": 22
+      }
+    },
+
+    "widgets": [{
+      "label": "Bookmark",
+      "uri": "widgets/Bookmark/Widget"
+    }, {
+      "label": "Legend",
+      "uri": "widgets/Legend/Widget"
+    }, {
+      "label": "Geoprocessing",
+      "uri": "widgets/Geoprocessing/Widget"
+    }, {
+      "label": "Edit",
+      "uri": "widgets/Edit/Widget"
+    }, {
+      "label": "LayerList",
+      "uri": "widgets/LayerList/Widget"
+    }]
+  },
+  "map": {
+    "position": {
+      "top": 44,
+      "right": 0,
+      "bottom": 24,
+      "left": 55
+    }
+  }
+}

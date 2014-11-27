@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Visualisierung</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
+  <!-- Karte soll kompletten Bildschirm füllen -->
+  <style>
+    html, body, #mapDiv{
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+  </style>
+  <script src="http://js.arcgis.com/3.9/"></script>
+  <script>
+    
+    require(["esri/map",
+      "esri/layers/FeatureLayer",
+      "esri/renderers/SimpleRenderer",
+      "esri/symbols/SimpleMarkerSymbol",
+      "esri/Color", "esri/InfoTemplate",
+      "esri/symbols/TextSymbol",
+      "esri/layers/LabelLayer",
+      "esri/dijit/Legend",
+      "dojo/parser",
+      "esri/layers/KMLLayer",
+      "esri/layers/CSVLayer",
+      "esri/dijit/BasemapToggle",
+      "dijit/layout/ContentPane",
+      "dijit/TitlePane",
+      "dojo/domReady!"],
+      function(
+        Map, FeatureLayer, SimpleRenderer, SimpleMarkerSymbol, Color, InfoTemplate,
+        TextSymbol, LabelLayer, Legend, parser, KMLLayer, CSVLayer, BasemapToggle) {
+      
+      // Wird benötigt da dojo-Module im HTML-Baum
+      parser.parse();
+
+      // Karte mit Light Gray Canvas Basemap von ArcGIS Online initialisieren
+      var map = new Map("mapDiv", {
+        basemap: "gray",
+        center: [10, 51], // longitude, latitude
+        zoom: 6
+      });
+
+      // FeatureLayer initialisieren
+      var windLayer = new FeatureLayer("http://tmservices1.esri.com/arcgis/rest/services/LiveFeeds/NOAA_METAR_current_wind_speed_direction/MapServer/0", {
+          mode: FeatureLayer.MODE_ONDEMAND,
+          outFields:["*"],
+          infoTemplate: new InfoTemplate("${STATION_NAME}, ${COUNTRY}", "<table><tr><td>Temperatur</td><td>${TEMP}F</td></tr><tr><td>Luftfeuchtigkeit</td><td>${R_HUMIDITY}</td></tr><tr><td>Wind</td><td>aus ${WIND_DIRECT} Grad mit ${WIND_SPEED}mph</td></tr><tr><td>Sichtweite</td><td>${VISIBILITY}</td></tr><tr><td>Luftdruck</td><td>${PRESSURE}mb</td></tr><tr><td>Bewölkung</td><td>${SKY_CONDTN}</td></tr><tr><td>Aussicht</td><td>${WEATHER}</td></tr><tr><td>Wärmezahl</td><td>${HEAT_INDEX}</td></tr></table><hr><i>${UTC_DATETIME}</i>")
+      });
+      
+      // Symbol mit SVG-Pfad initialisieren (Beispiele unter http://raphaeljs.com/icons/)
+      var marker = new SimpleMarkerSymbol().setPath("M15.834,29.084 15.834,16.166 2.917,16.166 29.083,2.917z");
+      var renderer = new SimpleRenderer(marker);
+      // Symbol in Windrichtung drehen
+      renderer.setRotationInfo({
+        field: "WIND_DIRECT"
+      });
+      // Farbe des Symbols aufgrund der Temperatur
+      renderer.setColorInfo({
+        field: "TEMP",
+        minDataValue: -20,
+        maxDataValue: 130,
+        colors: [
+          new Color([0,104,214]), new Color([20,120,220]), new Color([39,136,226]),
+          new Color([59,152,232]), new Color([78,169,237]), new Color([98,185,243]),
+          new Color([131,197,181]), new Color([164,210,120]), new Color([197,222,58]),
+          new Color([205,188,80]), new Color([212,155,102]), new Color([220,121,124]),
+          new Color([216,87,115]), new Color([211,53,106]), new Color([206,19,97])
+        ]
+      });
+      // Symbolgröße an Windgeschwindigkeit anpassen
+      renderer.setProportionalSymbolInfo({
+        field: "WIND_SPEED",
+        minSize: 6,
+        maxSize: 25,
+        minDataValue: 5,
+        maxDataValue: 50,
+        valueUnit: "unknown"
+      });
+      // Renderer zuweisen
+      windLayer.setRenderer(renderer);
+      // FeatureLayer zur Karte hinzufügen
+      map.addLayer(windLayer);
+
+      // Labeling mit Hilfe eines eigenen Layers
+      var labelSymbol = new TextSymbol().setColor(new Color("#666"));
+      labelSymbol.font.setSize("10pt");
+      labelSymbol.font.setFamily("arial");
+      var labelRenderer = new SimpleRenderer(labelSymbol);
+      // LabelLayer initialisieren
+      var labelLayer = new LabelLayer({ id: "labels" });
+      // FeatureLayer, für die Labeling aktiviert werden soll, beim LabelLayer registrieren
+      labelLayer.addFeatureLayer(windLayer, labelRenderer, "${TEMP}");
+      // LabelLayer zur Karte hinzufügen
+      map.addLayer(labelLayer);
+
+      // KML Layer der Karte hinzufügen
+      var kmlUrl = "http://bestofosm.org/data/bestof.kml";
+      var kml = new KMLLayer(kmlUrl); 
+      map.addLayer(kml);
+
+      // CSV Layer von lokalem Server der Karte hinzufügen
+      var csvLayer = new CSVLayer("bundesliga.csv");
+      var csvSymbol = new SimpleMarkerSymbol("solid", 15, null, new Color([238, 69, 0, 0.5]));
+      var csvRenderer = new SimpleRenderer(csvSymbol);
+      csvLayer.setRenderer(csvRenderer);
+      var csvTemplate = new InfoTemplate("${Stadion}", "<table><tr><td>Verein</td><td>${Verein}</td></tr><tr><td>Sitze</td><td>${Sitze}</td></tr></table>");
+      csvLayer.setInfoTemplate(csvTemplate);
+      map.addLayer(csvLayer);
+
+      // Legende initialisieren
+      var legendDijit = new Legend({
+            map: map
+          }, "legendDiv");
+      legendDijit.startup();
+
+      // Widget um Hintergrundkarte wechseln
+      var toggle = new BasemapToggle({
+        map: map,
+        basemap: "osm"
+      }, "BasemapToggle");
+      toggle.startup();
+     
+    });
+  </script>
+
+</head>
+<body class="claro">
+  <div id="mapDiv"> <!-- Container für Karte -->
+    <div style="position:absolute; right:20px; top:10px; z-Index:999;">
+      <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legende', closable:false,  open:false">
+        <div data-dojo-type="dijit/layout/ContentPane" id="legendPane" data-dojo-props="selected:true">
+          <div id="legendDiv"></div> <!-- Container für Legende -->
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; right:20px; top:50px; z-Index:50;">
+      <div id="BasemapToggle"></div> <!-- Container für Basemap-Wechsler -->
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "SidebarController",
+  "label": "Sidebar Controller",
+  "2D": true,
+  "3D": true,
+  "inPanel": false,
+  "platform": "HTML",
+  "version": "0.0.1",
+  "author": "Esri R&D Center Beijing",
+  "description": "",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0",
+  "properties": {
+    "inPanel": false,
+    "hasLocale": false,
+    "isController": true,
+    "hasConfig": false,
+    "isThemeWidget": true
+  }
+}

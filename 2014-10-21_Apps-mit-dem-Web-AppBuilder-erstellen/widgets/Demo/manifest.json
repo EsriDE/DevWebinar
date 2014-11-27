@@ -1,0 +1,9 @@
+{
+  "name": "Demo",
+  "platform": "HTML",
+  "version": "0.0.1",
+  "author": "Esri Deutschland GmbH",
+  "description": "Widget aus dem Webinar für Entwickler",
+  "copyright": "",
+  "license": "http://www.apache.org/licenses/LICENSE-2.0"
+}
