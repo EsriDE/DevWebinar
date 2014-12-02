@@ -37,6 +37,7 @@ The samples contain placeholders for &lt;token&gt;, &lt;username&gt;, and &lt;pa
 
 * [Esri Geotrigger Serivce] (https://developers.arcgis.com/en/features/geotrigger-service/)
 * [Esri Geotrigger Serivce Documentation] (https://developers.arcgis.com/geotrigger-service/)
+* [Further Ressources] (https://geonet.esri.com/groups/geodev-germany/blog/2014/12/02/webinar-f%C3%BCr-entwickler-zum-esri-geotrigger-service) (video, slides, ...)
 
 
 ## **Licensing**
