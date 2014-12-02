@@ -1,0 +1,137 @@
+{
+   "id":"2d773e35-51c2-d9da-1865-7e039af06812",
+   "name":"Ortsbezogene Benachrichtigungen",
+   "timestamp":1416843933284,
+   "requests":[
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"0bbdfcef-22d4-44da-9650-3782402b4cc5",
+         "name":"Trigger Delete",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/trigger/delete",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{\"tags\": [ \"baustelle\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184599935
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"1a096a8a-ab8c-f1c0-0994-f07c85a73854",
+         "name":"Tag List",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/tag/list",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{\"tags\": [ \"webinar\", \"baustelle\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184562957
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"31a0332c-a582-d286-1ceb-5cbede0e1f29",
+         "name":"Tag Delete",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/tag/delete",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token>\nContent-Type: application/json\n",
+         "data":"{\"tags\": [ \"remove\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184650952
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"6b73a443-f058-a724-93a7-71e1b66c32ac",
+         "name":"Trigger List",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/trigger/list",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{\"tags\": [ \"baustelle\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184621687
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"7499b089-036b-29c4-3038-d8dd842e13e5",
+         "name":"Trigger History",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/trigger/history",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{\"triggerIds\": [ \"11\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184610891
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"980519e9-9aac-5665-ea65-eb5babd57054",
+         "name":"Generate Token",
+         "description":"",
+         "url":"https://www.arcgis.com/sharing/oauth2/token?client_id=<client_id>&client_secret=<client_secret>&grant_type=client_credentials&f=json",
+         "method":"POST",
+         "headers":"",
+         "data":[
+
+         ],
+         "dataMode":"params",
+         "timestamp":0,
+         "responses":[
+
+         ],
+         "version":2
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"a50a74b8-6fbc-9ac7-f58e-97f5cb4c462a",
+         "name":"Tag Remove",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/tag/remove",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{\"tags\": [ \"remove\" ]}",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184573723
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"c918e9cc-625d-516d-30ba-232e2404cb53",
+         "name":"Trigger Update",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/trigger/update",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token>\nContent-Type: application/json\n",
+         "data":"{ \"triggerIds\": [\"Baustelle A9\"], \"condition\": { \"geo\": { \"geojson\": { \"type\": \"Polygon\", \"coordinates\": [[ [ 11.6001892089844, 48.3409881851942 ], [ 11.6149520874023, 48.3181625488758 ], [ 11.6266250610352, 48.3211304593609 ], [ 11.6122055053711, 48.3437265750002 ], [ 11.6001892089844, 48.3409881851942 ] ]] } }, \"direction\": \"enter\" }, \"action\": { \"notification\": { \"text\": \"Achtung, Baustelle auf der A9!\" } }, \"addTags\": [\"added\"] }",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184631159
+      },
+      {
+         "collectionId":"2d773e35-51c2-d9da-1865-7e039af06812",
+         "id":"ea5f2a84-f95d-5317-223e-42a92a95880b",
+         "name":"Trigger Create",
+         "description":"",
+         "url":"https://geotrigger.arcgis.com/trigger/create",
+         "method":"POST",
+         "headers":"Authorization: Bearer <token> \nContent-Type: application/json\n",
+         "data":"{ \"triggerId\": \"Baustelle A9\", \"condition\": { \"direction\": \"enter\", \"geo\": { \"geojson\": { \"type\": \"Polygon\", \"coordinates\": [ [ [ 11.590576171875, 48.3590132144237 ], [ 11.608772277832, 48.3268374942142 ], [ 11.6218185424805, 48.3288918704426 ], [ 11.6025924682617, 48.361294409093 ], [ 11.590576171875, 48.3590132144237 ] ] ] } } }, \"action\": { \"notification\": { \"text\": \"Achtung, Baustelle auf der A9!\", \"data\": {\"triggerId\": \"Baustelle A9\"} } }, \"setTags\": [\"baustelle\", \"webinar\", \"remove\"] }",
+         "dataMode":"raw",
+         "timestamp":0,
+         "version":2,
+         "time":1417184586763
+      }
+   ]
+}
