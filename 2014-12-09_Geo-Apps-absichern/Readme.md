@@ -3,6 +3,14 @@
 
 ## **Instructions**
 
+Gerade im Web ist Sicherheit ein wichtiges und zu Recht viel diskutiertes Thema. Esri integriert eine große Bandbreite technischer Standards und bietet damit die Basis für den umfassenden Schutz Ihrer Karten-Dienste und –Anwendungen.
+An praktischen Beispielen lernt Ihr...
+
+- Kartendienste, Karten und Karten-Anwendungen abzusichern
+- die Konzepte User Login und App Login kennen
+- auf gesicherte Daten mittels Token Service sowie OAuth2 zuzugreifen
+- wie ihr die Anmeldung über Enterprise-Anmeldenamen für ArcGIS Online einrichtet (SAML, SSO)
+
 Präsentation und Quelltext sind komplett im Website-Verzeichnis enthalten. Dort finden Sie ein alle gezeigten "Folien" in Form von HTML-Seiten und alle Quelltext-Beispiele. In den Quelltexten sind alle wichtigen Inhalte wiederum mit der notwendigen Dokumentation im Internet verknüpft.
     
 ## **Requirements**
