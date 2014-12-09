@@ -1,5 +1,5 @@
 # **Geo-Apps absichern**
-*aus dem Webinar für Entwickler*
+*Code samples from the German webinar "[Geo-Apps absichern] (https://geonet.esri.com/events/1292)"*
 
 ## **Instructions**
 
