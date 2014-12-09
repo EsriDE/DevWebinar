@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern, User Logins</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div id="container">
+		<h1 id="header">OAuth2 - User Logins</h1>
+		<div id="footprint" onclick="window.open('page7.html', '_self')"><img src="footprints.png" alt=""></div>
+	</div>
+
+	<div id="content">
+		<h2>1 Step Flow: Implicit Grant</h2>	
+		<ul>
+			<li>Login erfolgt in einem einzigen Schritt</li>
+			<p>Die Access-Tokens sind sogenannte "short-lived tokens" und verfallen nach relativ kurzer Zeit wieder. Der IdentityManager der Web-APIs sorgt für die regelmäßige Erneuerung.</p>			
+			<li>.../oauth2/authorize?response_type=token&...</li>
+			<p>Gibt einen Access-Token zurück</p>			
+			<li>für Anwendungen im Browser</li>
+			<p>Javascript, Flex, Silverlight</p>
+		</ul>
+		<br>
+		<h2>Demo:</h2>
+		<ul class='demo'>
+			<li><a href="https://www.arcgis.com/sharing/rest/oauth2/authorize?client_id=Xv0kmCY6PQR8ow2g&redirect_uri=http://localhost/webinar/empty.html&response_type=token" target="_blank">.../oauth2/authorize?client_id=Xv0kmCY6PQR8ow2g&response_type=token</a></li>
+			<p>redirect_uri=http://localhost/webinar/empty.html</p>
+			<li>Aufruf in einer <a href="https://localhost/webinar/userlogin.html" target="_blank">Webanwendung</a> (https://localhost/webinar/userlogin.html)</li>
+		</ul>
+		
+	</div>
+</html>

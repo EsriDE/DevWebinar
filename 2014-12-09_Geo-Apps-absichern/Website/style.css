@@ -1,0 +1,107 @@
+/*
+@brown = #36312C
+@red = #BE5330
+@orange = #F8B535
+@darkgreen = #53A065
+@hover = lighten(@brown, 70%)
+@lightgreen = #BECC5E
+@lightgray = #EDD1D7
+*/
+
+body{
+	background-color: #36312C;
+  	font-family: "Source Code Pro", sans-serif;
+	padding: 20px;
+	color: #EDD1D7;	
+}
+body a{
+	color: #EDD1D7;
+}
+
+ul {	
+	list-style: decimal;
+}
+
+li{
+	color: #F8B535;	
+	font-size: 1.3em;
+	padding-bottom: 10px;
+}
+
+li a{
+	color: #F8B535;	
+}
+
+ul > p{
+	font-size: 0.9em;
+	margin-top: 3px;
+	padding-bottom: 5px;
+}
+
+li.without{
+	list-style-type: none;
+}
+
+p.comment{
+	font-size: 0.9em;
+	margin-top: 3px;
+	padding-bottom: 5px;
+}
+p.comment a{
+	color: #EDD1D7;
+	font-style: italic;
+}
+
+#content{
+	width: 800px;
+	margin-left: 30px;
+}
+
+h1 {
+	color: #BE5330;
+	clear: both;
+	display: block;;	
+}
+
+h2:hover, li:hover{
+	background-color: #5b534a;
+	cursor: cell;
+}
+
+h2 {	
+	color: #53A065;
+}
+
+h2 a{	
+	color: #53A065;
+	text-decoration: none;
+}
+
+.demo>li {
+	color: #BECC5E;
+	font-size: 1em;
+	line-height: 200%;
+}
+.demo>li a{
+	color: #BECC5E;
+	font-style: italic;
+}
+
+#container{
+	padding-bottom:20px;
+}
+
+#footprint
+{
+	position: relative;
+    top: 15px;
+    left: 60px;
+    cursor: pointer;
+}
+#header, #footprint
+{
+    display:inline;
+    clear:both;
+}
+
+/* Variables:lightgray{256:263,284:291,623:630}.hover{801:808}.red{717:724}.brown{176:183}.orange{339:346,408:415}.lightgreen{924:931,992:999}.darkgreen{842:849,869:876} */

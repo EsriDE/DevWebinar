@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern, User Logins</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div id="container">
+		<h1 id="header">OAuth2 - App Logins</h1>
+		<div id="footprint" onclick="window.open('page9.html', '_self')"><img src="footprints.png" alt=""></div>
+	</div>
+
+	<div id="content">
+		<h2>App Logins - Für anonyme Benutzer</h2>	
+		<ul>
+			<li>Anwendung kann von Jedem benutzt werden</li>
+			<p>Die Anwender müssen, im Gegensatz zu den User Logins, nicht als "Named User" bei ArcGIS Online bekannt sein.</p>	
+			<li>Die App verwendet abgesicherte Objekte des Portals</li>
+			<p>Innerhalb der App werden Dienste verwendet, die nicht öffentlich sind.</p>			
+			<li>../token?grant_type=client_credentials&</li>
+			<li class="without">client_id=...&</li>
+			<li class="without">client_secret=...</li>
+			<p>Gibt einen Access-Token zurück.</p>
+			<li>Der Credit-Verbrauch der Dienste wird der App zugeordnet.</li>
+		</ul>
+		<br>
+		<h2>Demo:</h2>
+		<ul class='demo'>
+			<li><a href="https://developers.arcgis.com/javascript/jssamples/widget_directions_basic.html" target="_blank">Routing Service</a> auf ArcGIS Online</li>
+			<li>Proxy Resourcen auf <a href="https://github.com/Esri/resource-proxy" target="_blank">Github.</a></li>
+			<li>Aufruf der App in <a href="https://esri-de.maps.arcgis.com/home/item.html?id=6efad131dede4ca9a8f4b395a15e973d" target="_blank">ArcGIS Online</a>, um den Credit-Verbrauch zu zeigen.</li>
+		</ul>
+		
+	</div>
+</html>

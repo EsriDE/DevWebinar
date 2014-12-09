@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern, User Logins</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div id="container">
+		<h1 id="header">OAuth2 - User Logins</h1>
+		<div id="footprint" onclick="window.open('page8.html', '_self')"><img src="footprints.png" alt=""></div>
+	</div>
+
+	<div id="content">
+		<h2>2 Step Flow: Authorization Grant</h2>	
+		<ul>
+			<li>Login erfolgt in zwei Schritten</li>
+			<p>für mobile Anwendungen, Desktop- und Server-Anwendungen.</p>
+			<li>.../oauth2/authorize?response_type=code&...</li>
+			<p>Gibt einen Authorization-Code zurück</p>			
+			<li>.../oauth2/token?grant_type=authorization_code&code=</li>
+			<p>Gibt einen access_token und einen refresh_token zurück</p>
+			<li>.../oauth2/token?grant_type=refresh_token&refresh_token=</li>
+			<p>Gibt einen access_token zurück</p>
+		</ul>	
+	</div>
+</html>

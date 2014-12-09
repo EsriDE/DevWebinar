@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern, User Logins</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<div id="container">
+		<h1 id="header">OAuth2 - UserLogins</h1>
+		<div id="footprint" onclick="window.open('userlogin.html', '_self')"><img src="footprints.png" alt=""></div>
+	</div>
+	<div id="content">
+		<h2>Leere Seite, aber wir haben einen Token zur&uuml;ck bekommen:</h2>
+		<div id="token" style="color:#BECC5E; width:800px">token</div>
+	</div>
+</body>
+
+<script>
+	var query = window.location.toString();
+	var pos = query.indexOf('=') + 1;
+	var pos2 = query.indexOf('&') + 1;
+	var sub = query.substr(pos, pos2-pos);
+	document.getElementById('token').innerHTML = sub;
+</script>
+
+</html>

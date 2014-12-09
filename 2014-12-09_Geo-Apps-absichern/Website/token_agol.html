@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Geo-Apps absichern, Token-Service</title>
+    <!-- protocol-relative url  
+    http://www.paulirish.com/2010/the-protocol-relative-url/ -->
+    <link rel="stylesheet" href="//js.arcgis.com/3.11/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.11/esri/css/esri.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+      #mapDiv{
+        position: relative;
+        width: 800px;
+        height: 600px;
+        left: 0px;
+        top: 0px;
+        border: solid 1px #EDD1D7;
+        padding: 4px;        
+        /* http://odoe.net/blog/?p=322 */
+        /* http://caniuse.com/#feat=css-filters */
+        /* http://net.tutsplus.com/tutorials/html-css-techniques/say-hello-to-css3-filters/ */
+        -webkit-filter: brightness(80%) sepia(30%) !important;
+      }
+
+    </style>
+    
+    <script src="//js.arcgis.com/3.11/"></script>
+
+    <script>
+    
+    var serviceUrl = "//services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/TimeZones/FeatureServer/0";
+
+      require([
+          // The IdentityManager must only be referenced, nothing else to do.
+          // https://developers.arcgis.com/javascript/jsapi/identitymanager-amd.html
+          "esri/IdentityManager",
+          "esri/map",
+          "esri/layers/FeatureLayer",
+          // The dom must be complete before accessing the div for the map
+          // http://dojotoolkit.org/reference-guide/1.10/dojo/domReady.html
+          "dojo/domReady!"      
+          ],
+
+          function (IdentityManager, Map, FeatureLayer) {
+
+            var map = new esri.Map("mapDiv", { 
+              basemap: "gray",
+              center: [11, 52],
+              zoom: 4
+            });  
+
+            map.on("load", initOperationalLayer);
+
+            function initOperationalLayer() {
+              featureLayer = new esri.layers.FeatureLayer(serviceUrl,{
+                mode: esri.layers.FeatureLayer.MODE_ONDEMAND
+              });
+              
+              map.addLayer(featureLayer);
+
+              featureLayer.on("load", function(){
+                document.getElementById('loading').style.visibility = "hidden";
+              });
+              
+            };
+            
+            document.getElementById('loading').addEventListener("click", function(){
+              // https://developers.arcgis.com/javascript/jsapi/identitymanager-amd.html#getcredential
+              IdentityManager.getCredential(serviceUrl).then(initOperationalLayer);
+            });
+          }
+      );
+
+</script>
+
+</head> 
+<body class="claro">
+
+  <div id="container">
+    <h1 id="header">Dienste, Karten und Apps absichern</h1>
+    <div id="footprint" onclick="window.open('page3.html', '_self')"><img src="footprints.png" alt=""></div>
+  </div>
+  <h2>ArcGIS Online - Token basierte Authentifizierung</h2>
+  <div id="mapDiv">
+    <div id="loading" style="position:absolute;top:50%;left:50%;z-index: 1111; margin-left: -128px; margin-top: -118px; cursor: pointer">
+      <img src="padlock.png" />
+    </div>
+  </div>    
+</body> 
+</html>

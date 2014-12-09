@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <title>Geo-Apps absichern, Token-Service</title>
+    <link rel="stylesheet" href="//js.arcgis.com/3.11/dijit/themes/claro/claro.css">
+    <link rel="stylesheet" href="//js.arcgis.com/3.11/esri/css/esri.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+      #mapDiv{
+        position: relative;
+        width: 800px;
+        height: 600px;
+        left: 0px;
+        top: 0px;
+        border: solid 1px #EDD1D7;
+        padding: 4px;      
+        /* http://odoe.net/blog/?p=322 */
+        /* http://caniuse.com/#feat=css-filters */
+        /* http://net.tutsplus.com/tutorials/html-css-techniques/say-hello-to-css3-filters/ */
+        -webkit-filter: brightness(80%) sepia(30%) !important;
+
+      }
+    </style>
+    
+    <script src="//js.arcgis.com/3.11/"></script>
+
+    <script>
+    
+    var tiledUrl = "//tiles.arcgis.com/tiles/jIL9msH9OI208GCb/arcgis/rest/services/World_Relief_Map/MapServer"
+    var serviceUrl = "//services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/TimeZones/FeatureServer/0";
+
+      require([
+          "esri/map",
+          "esri/layers/FeatureLayer",
+          "esri/layers/ArcGISTiledMapServiceLayer",
+          "esri/arcgis/OAuthInfo",
+          "esri/IdentityManager",
+          "dojo/domReady!"      
+          ],
+
+          function (Map, FeatureLayer, ArcGISTiledMapServiceLayer, OAuthInfo, IdentityManager) {
+            // https://developers.arcgis.com/javascript/jsapi/oauthinfo-amd.html
+            var info = new OAuthInfo({
+              appId: "Xv0kmCY6PQR8ow2g",              
+              popup: false
+            });
+            // https://developers.arcgis.com/javascript/jsapi/identitymanager-amd.html
+            IdentityManager.registerOAuthInfos([info]);
+            IdentityManager.getCredential("https://www.arcgis.com/sharing/rest/oauth2");
+            
+            var map = new esri.Map("mapDiv", { 
+              center: [11, 52],
+              zoom: 3
+            });  
+
+            var tiledlayer = new ArcGISTiledMapServiceLayer(tiledUrl);
+            map.addLayer(tiledlayer);
+
+            map.on("load", initOperationalLayer);
+
+            function initOperationalLayer() {
+              featureLayer = new esri.layers.FeatureLayer(serviceUrl,{
+                mode: esri.layers.FeatureLayer.MODE_ONDEMAND
+              });
+              map.addLayer(featureLayer);
+              featureLayer.on("load", function(){
+                document.getElementById('loading').style.visibility = "hidden";
+              });
+            };            
+          }
+      );
+
+</script>
+
+</head> 
+<body class="claro">
+
+  <div id="container">
+    <h1 id="header">Dienste, Karten und Apps absichern</h1>
+    <div id="footprint" onclick="window.open('page7.html', '_self')"><img src="footprints.png" alt=""></div>
+  </div>
+  <h2>Portal - User Login</h2>
+  <div id="mapDiv">
+    <div id="loading" style="position:absolute;top:50%;left:50%;z-index: 1111; margin-left: -128px; margin-top: -118px; cursor: pointer">
+      <img src="padlock.png" />
+    </div>
+  </div>    
+</body> 
+</html>

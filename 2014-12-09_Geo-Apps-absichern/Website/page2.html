@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div id="container">
+		<h1 id="header">Dienste, Karten und Apps absichern</h1>
+		<div id="footprint" onclick="window.open('token_agol.html', '_self')"><img src="footprints.png" alt=""></div>
+	</div>
+
+	<div id="content">
+	<h2>ArcGIS Online und Portal for ArcGIS</h2>
+		<ul>
+			<li>jedes Objekt auf ArcGIS Online ist erst einmal privat</li>
+			<p>Völlig unabhängig, ob Sie ArcGIS Online in der freien Version oder als Organisation verwenden, sind alle Objekte die Sie anlegen erst einmal privat.<br>Also müssen Sie eigentlich nicht absichern sondern entsichern.</p>
+			<li>alle Objekte auf ArcGIS Online können freigegeben werden</li>
+			<p>Mit einem freien ArcGIS Online-Zugang haben Sie nur die Wahl zwischen privaten und öffentlichen Objekten. In einer Organisation können Sie Inhalte mit Gruppen, der gesamten Organisation oder der Öffentlichkeit teilen.</p>
+		</ul>
+		<br>
+		<h2>Demo:</h2>
+		<ul class='demo'>
+			<li>Erstellen eines <a href="http://resources.arcgis.com/en/help/main/10.2/index.html#//0154000002w8000000" target="_blank">FeatureServices</a>  mit ArcGIS Pro</li>
+			<li>Freigeben des Dienstes innerhalb der <a href="https://www.arcgis.com/home/signin.html" target="_blank">Organisation</a></li>
+			<li>Aufruf des Services im <a href="http://developers.arcgis.com/javascript/sandbox/sandbox.html?sample=widget_identitymanager" target="_blank">ArcGIS.com</a> Viewer</li>
+			<p>http://services.arcgis.com/OLiydejKCZTGhvWg/arcgis/rest/services/TimeZones/FeatureServer/0</p>
+			<li>Erstellen einer eigenen Anwendung mit dem <a href="https://developers.arcgis.com/javascript/jsapi/identitymanager-amd.html" target="_blank">IdentityManager</a> </li>
+		</ul>
+		
+	</div>
+
+</body>
+</html>

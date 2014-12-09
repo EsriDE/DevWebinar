@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8">
+	<title>Geo-Apps absichern</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	
+	<div id="container">
+		<h1 id="header">Dienste, Karten und Apps absichern</h1>
+		<div id="footprint" onclick="window.open('token_ags.html', '_blank')"><img src="footprints.png" alt=""></div>
+	</div>
+
+	<div id="content">
+		<h2>ArcGIS for Server on Premise</h2>	
+		<ul>
+			<li>Dienste auf ArcGIS for Server sind erst einmal öffentlich</li>
+			<p>genau umgekehrt zu ArcGIS Online, sind auf dem eigenen ArcGIS for Server alle Dienste nach dem Veröffentlichen allen Nutzern zugänglich</p>
+			<li>einzelne Dienste oder Ordner können abgesichert werden</li>
+			<p>erst wenn explizit die Rechte mit Hilfe von Nutzern und Rollen eingeschränkt werden, ist der Dienst oder Ordner geschützt.</p>
+		</ul>
+		<br>
+		<h2>Demo:</h2>
+		<ul class='demo'>
+			<li>Veröffentlichen eines Services mit ArcMap</li>
+			<li>Aufruf des <a href="http://localhost:6080/arcgis/rest" target="_blank">Service-Directories</a>, ungesicherter Dienst</li>
+			<li>Absichern des Dienstes im <a href="http://localhost:6080/arcgis/manager" target="_blank">ArcGIS Server - Manager</a></li>
+			<li>Aufruf des <a href="http://localhost:6080/arcgis/rest" target="_blank">Service-Directories</a>, gesicherter Dienst</li>			
+			<li>Aufruf des Services in einer <a href="https://localhost/webinar/token_ags.html" target="_blank">Webanwendung</a></li>
+			<li>Umstellung auf Single Sign On.</a></li>
+			<p>Geht nur mit Windows Domainen oder LDAP, zusammen mit einem WebAdaptor und &quot;Windows Authentication&quot; im IIS.</p>
+		</ul>
+	</div>
+
+</body>
+</html>
