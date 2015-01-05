@@ -13,7 +13,7 @@ Die einzelnen Schritte können in der [Aufzeichnung des Webinar](http://www.eggi
 
 ## **Requirements**
 
-Voraussetzung für das Entwickeln von eigenen Widgets und Themes ist die Developer Edition des [Web AppBuilders for ArcGIS](http://doc.arcgis.com/en/web-appbuilder/). Diese ist momentan noch in Beta, und kann nur über das [Betaprogramm](https://betacommunity.esri.com/home.html) heruntergeladen werden.
+Voraussetzung für das Entwickeln von eigenen Widgets und Themes ist die Developer Edition des [Web AppBuilders for ArcGIS](http://doc.arcgis.com/en/web-appbuilder/). Diese kann von [https://developers.arcgis.com/web-appbuilder/](https://developers.arcgis.com/web-appbuilder/) heruntergeladen werden.
 
 ## **Issues**
 
