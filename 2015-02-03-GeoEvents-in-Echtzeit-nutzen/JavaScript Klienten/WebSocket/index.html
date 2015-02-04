@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>WebSocket Test</title>
+
+	<link rel="stylesheet" href="http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/dojo/dijit/themes/claro/claro.css">
+	<link rel="stylesheet" href="http://js.arcgis.com/3.10/js/esri/css/esri.css">
+	<style>
+	  html, body, #mapDiv {
+		padding: 0;
+		margin: 0;
+		height: 100%;
+	  }
+	</style>
+	<script type="text/javascript">
+		var dojoConfig = {
+			"tlmSiblingOfDojo": false,
+			"async": true,
+			"gfxRenderer": "canvas",
+			"parseOnLoad" : true,
+			"packages" : [
+				{
+					"name" : "GEP",
+					"location" : location.protocol + "//" + location.host + location.pathname.replace("/\/[^/]+$/", "") + "/js/",
+					"main" : "Application"
+				}
+			]
+		};
+	</script>
+	<script src="//js.arcgis.com/3.10/"></script>
+	<script>
+			require(["GEP/Application"], function(Application) {
+				window.app = new Application();
+			});
+	</script>
+</head>
+<body class="claro">
+	<div id="mapDiv">
+		<div style="position:absolute; right:20px; top:90px; z-Index:999;">
+			<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Switch Basemap', closable:false,  open:false">
+				<div data-dojo-type="dijit/layout/ContentPane" style="width:380px; height:170px; overflow:auto;">
+					<div id="basemapGallery" ></div>
+				</div>
+          </div>
+        </div>
+		<div style="position:absolute; right:20px; top:50px; z-Index:999;">
+			<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Bookmarks', closable:false,  open:false">
+				<div id="bookmarks"></div>
+			</div>
+		</div>
+		<div style="position:absolute; right:20px; top:10px; z-Index:999;">
+			<div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Select Layer', closable:false,  open:false">
+				<input id="checkBoxMVV"/>
+				<label for="checkBoxMVV">S-Bahn</label>
+			</div>
+		</div>
+	</div>
+	<div id="mapDiv">
+		<div style="position:absolute; left:20px; top:95px; z-Index:50;">
+			<div id="HomeButton"></div>
+		</div>
+	</div>
+	<div id="mapDiv">
+		<div style="position:absolute; left:20px; top:135px; z-Index:50;">
+			<div id="LocateButton"></div>
+		</div>
+	</div>
+</body>
+</html>

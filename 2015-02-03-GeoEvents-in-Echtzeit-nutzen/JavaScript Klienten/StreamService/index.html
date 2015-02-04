@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Map with StreamLayer</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/dojo/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="http://js.arcgis.com/3.9/js/esri/css/esri.css">
+  <style>
+    html, body, #mapDiv{
+      padding: 0;
+      margin: 0;
+      height: 100%;
+    }
+  </style>
+  
+  <script src="http://js.arcgis.com/3.11/"></script>
+  <script>
+    var map;
+    require(["esri/map", "dojo/parser", 
+      "esri/InfoTemplate", "esri/layers/StreamLayer", "dojo/on", "dojo/io-query", "dojo/domReady!"], 
+      function(Map, parser, InfoTemplate, StreamLayer, on, ioQuery) {
+
+        parser.parse();
+
+      map = new Map("mapDiv", {
+        basemap: "topo",
+          center: [10, 51], // longitude, latitude
+          zoom: 6
+      });
+	  
+	  var streamLayer = new StreamLayer("http://localhost:6080/arcgis/rest/services/TwitterStream/StreamServer", {
+            purgeOptions: { displayCount: 5000 },
+            socketDirection: "subscribe",
+            infoTemplate: new InfoTemplate("Tweet", "<tr>Text: <td>${text}</tr></td><br><tr>Benutzer:<td>${user}</tr></td>")
+          });
+	  streamLayer.on('connection-error', function(error) {
+		console.log('Fehler in Connection ' + error);
+	  });
+	  streamLayer.on('connect', function() {
+		console.log('Connected');
+	  });
+	  streamLayer.on('error', function(error) {
+		console.log('Error ' + error);
+	  });
+	  streamLayer.on('load', function(layer) {
+		console.log('Loaded ' + layer);
+	  });
+	  streamLayer.on('message', function(message) {
+		console.log('Message' + message);
+	  });
+	  map.addLayer(streamLayer);
+	  
+    });
+  </script>
+
+</head>
+<body class="claro">
+  <div id="mapDiv">
+    <div style="position:absolute; right:20px; top:10px; z-Index:999;">
+      <div data-dojo-type="dijit/TitlePane" data-dojo-props="title:'Legende', closable:false,  open:false">
+        <div data-dojo-type="dijit/layout/ContentPane" id="legendPane" data-dojo-props="title:'Legende', selected:true">
+          <div id="legendDiv"></div>
+        </div>
+      </div>
+    </div>
+    <div style="position:absolute; right:20px; top:50px; z-Index:50;">
+      <div id="BasemapToggle"></div>
+    </div>
+  </div>
+</body>
+</html>

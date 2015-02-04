@@ -1,0 +1,1007 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<template key="mWHS4kxueSQcxLww3HzgAQ==" productVersion="10.3.0">
+    <geoEventServices>
+        <geoEventService name="GEOFON" label="GEOFON" description="latest earthquakes observed from a German research institute" lineStyle="Diagonal" runningState="STARTED" statusDetails="">
+            <inputs>
+                <input ref="geofon-rss-in" label="geofon-rss-in" left="11" top="20" width="70" height="60"/>
+            </inputs>
+            <outputs>
+                <output ref="geofon-fs-out" label="geofon-fs-out" left="747" top="372" width="70" height="60"/>
+                <output ref="a5b7a899-c439-4e7e-86cd-20c9f563c9cc" label="websocket-json-out" left="731" top="575" width="131" height="40"/>
+            </outputs>
+            <nodes>
+                <node name="clean_depth" label="clean_depth" left="289" top="401" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, depth, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="clean_lon" label="clean_lon" left="284" top="315" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, lon, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="date_token" label="date_token" left="147" top="125" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date</property>
+                            <property name="expression" type="String">substring(trim(description), 0, 19)</property>
+                            <property name="newFieldName" type="String">date</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String"></property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="clean_status" label="clean_status" left="279" top="591" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, status, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="status_token" label="status_token" left="150" top="592" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon_depth_units_status</property>
+                            <property name="expression" type="String">substring(description, 0, indexOf(description, ' ', 0))</property>
+                            <property name="newFieldName" type="String">status</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String">token</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="depth_token" label="depth_token" left="153" top="404" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon_depth</property>
+                            <property name="expression" type="String">substring(description, 0, indexOf(description, ' ', 0))</property>
+                            <property name="newFieldName" type="String">depth</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String">token</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="fm" label="fm" left="547" top="484" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldMapper/10.3.0">
+                        <properties>
+                            <property name="inputGeoEventDefinition" type="GeoEventDefinition">geofon_date_lat_lon_depth_units_status_geometry_magni</property>
+                            <property name="outputGeoEventDefinition" type="GeoEventDefinition">GFZ_Potsdam_Earthquake_Bulletin</property>
+                            <property name="inputFields" type="String">guid,title,link,date,depth,status,geometry,magni</property>
+                            <property name="outputFields" type="String">GUID,Title,Link,Date,Depth,Status,geometry,Magnitude</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="lon_token" label="lon_token" left="152" top="317" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon</property>
+                            <property name="expression" type="String">substring(description, 0, indexOf(description, ' ', 0))</property>
+                            <property name="newFieldName" type="String">lon</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String">token</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="acabada9-fd69-4383-83ed-92b1ce750dcf" label="magni_token" left="402" top="495" width="87" height="40">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon_depth_units_status_geometry_magni</property>
+                            <property name="expression" type="String">substring(title, indexOf(title, ' ', 0) + 1, indexOf(title, ',', 0))</property>
+                            <property name="newFieldName" type="String">magni</property>
+                            <property name="newFieldType" type="String">Double</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String"></property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="depth_units_token" label="depth_units_token" left="151" top="496" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon_depth_units</property>
+                            <property name="expression" type="String">substring(description, 0, indexOf(description, ' ', 0))</property>
+                            <property name="newFieldName" type="String">depth_units</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String">token</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="date_correct" label="date_correct" left="397" top="127" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">replaceAll(date, ' ', 'T')</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">date</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="clean_date" label="clean_date" left="286" top="126" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, date, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="clean_lat" label="clean_lat" left="288" top="223" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, lat, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="to_geometry" label="to_geometry" left="415" top="588" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat_lon_depth_units_status_geometry</property>
+                            <property name="expression" type="String">'{ &quot;x&quot; : ' + lon + ', &quot;y&quot; : ' + lat + ', &quot;spatialReference&quot; : {&quot;wkid&quot; : 4326}}'</property>
+                            <property name="newFieldName" type="String">geometry</property>
+                            <property name="newFieldType" type="String">Geometry</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String"></property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="clean_depth_units" label="clean_depth_units" left="288" top="494" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">FieldCalculator</property>
+                            <property name="expression" type="String">trim(replaceFirst(description, depth_units, ''))</property>
+                            <property name="newFieldName" type="String"></property>
+                            <property name="newFieldType" type="String">Boolean</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">Existing Field</property>
+                            <property name="existingFieldName" type="String">description</property>
+                        </properties>
+                    </processor>
+                </node>
+                <node name="lat_token" label="lat_token" left="152" top="225" width="70" height="60">
+                    <processor uri="com.esri.ges.processor/FieldCalculator/10.3.0">
+                        <properties>
+                            <property name="newGeoEventDefinitionName" type="String">geofon_date_lat</property>
+                            <property name="expression" type="String">substring(description, 0, indexOf(description, ' ', 0))</property>
+                            <property name="newFieldName" type="String">lat</property>
+                            <property name="newFieldType" type="String">String</property>
+                            <property name="newFieldTag" type="String"></property>
+                            <property name="resultDestination" type="String">New Field</property>
+                            <property name="existingFieldName" type="String">token</property>
+                        </properties>
+                    </processor>
+                </node>
+            </nodes>
+            <flow>
+                <from ref="clean_depth" label="clean_depth">
+                    <to ref="depth_units_token" label="depth_units_token"/>
+                </from>
+                <from ref="clean_lon" label="clean_lon">
+                    <to ref="depth_token" label="depth_token"/>
+                </from>
+                <from ref="date_token" label="date_token">
+                    <to ref="clean_date" label="clean_date"/>
+                </from>
+                <from ref="clean_status" label="clean_status">
+                    <to ref="to_geometry" label="to_geometry"/>
+                </from>
+                <from ref="status_token" label="status_token">
+                    <to ref="clean_status" label="clean_status"/>
+                </from>
+                <from ref="depth_token" label="depth_token">
+                    <to ref="clean_depth" label="clean_depth"/>
+                </from>
+                <from ref="fm" label="fm">
+                    <to ref="geofon-fs-out" label="geofon-fs-out"/>
+                    <to ref="a5b7a899-c439-4e7e-86cd-20c9f563c9cc" label="websocket-json-out"/>
+                </from>
+                <from ref="lon_token" label="lon_token">
+                    <to ref="clean_lon" label="clean_lon"/>
+                </from>
+                <from ref="acabada9-fd69-4383-83ed-92b1ce750dcf" label="magni_token">
+                    <to ref="fm" label="fm"/>
+                </from>
+                <from ref="geofon-rss-in" label="geofon-rss-in">
+                    <to ref="date_token" label="date_token"/>
+                </from>
+                <from ref="depth_units_token" label="depth_units_token">
+                    <to ref="clean_depth_units" label="clean_depth_units"/>
+                </from>
+                <from ref="date_correct" label="date_correct">
+                    <to ref="lat_token" label="lat_token"/>
+                </from>
+                <from ref="clean_date" label="clean_date">
+                    <to ref="date_correct" label="date_correct"/>
+                </from>
+                <from ref="clean_lat" label="clean_lat">
+                    <to ref="lon_token" label="lon_token"/>
+                </from>
+                <from ref="to_geometry" label="to_geometry">
+                    <to ref="acabada9-fd69-4383-83ed-92b1ce750dcf" label="magni_token"/>
+                </from>
+                <from ref="clean_depth_units" label="clean_depth_units">
+                    <to ref="status_token" label="status_token"/>
+                </from>
+                <from ref="lat_token" label="lat_token">
+                    <to ref="clean_lat" label="clean_lat"/>
+                </from>
+            </flow>
+            <geoEventsReceivedRateRange max="0.0" min="0.0"/>
+            <geoEventsSentRateRange max="0.0" min="0.0"/>
+        </geoEventService>
+    </geoEventServices>
+    <inputs>
+        <input clusterCommand="START" connector="esri-in-http-rss-georss" connectorLabel="Receive RSS" hostName="BRAVADA" label="geofon-rss-in" name="geofon-rss-in" runningState="STARTED" statusDetails="NULL" supportsAllGeoEventDefinitions="true">
+            <adapter uri="com.esri.ges.adapter.inbound/RSS/10.3.0"/>
+            <geoEventDefinitionHistory>
+                <guid>ffbc0bcb-eeee-4ec0-9d40-d72d6f12a66f</guid>
+            </geoEventDefinitionHistory>
+            <geoEventsRateRange max="0.0" min="0.0"/>
+            <supportedGeoEventDefinitions/>
+            <transport uri="com.esri.ges.transport.inbound/HTTP/10.3.0">
+                <properties>
+                    <property name="clientURLProxy" type="String"></property>
+                    <property name="useClientURLProxy" type="Boolean">false</property>
+                    <property name="clientPostBody" type="String"></property>
+                    <property name="acceptableMimeTypesClientMode" type="String">text/xml,application/rss+xml,application/atom+xml,application/xml,text/plain</property>
+                    <property name="mode" type="String">CLIENT</property>
+                    <property name="headers" type="String">name:value</property>
+                    <property name="httpMethod" type="String">GET</property>
+                    <property name="frequency" type="Integer">60</property>
+                    <property name="useLongPolling" type="Boolean">false</property>
+                    <property name="clientPostFrom" type="String">TEXT</property>
+                    <property name="httpTimeoutValue" type="Integer">30</property>
+                    <property name="honorLastModified" type="Boolean">true</property>
+                    <property name="clientURL" type="String">http://geofon.gfz-potsdam.de/eqinfo/list.php?fmt=rss</property>
+                    <property name="postContentType" type="String"></property>
+                    <property name="acceptableMimeTypesServerMode" type="String"></property>
+                    <property name="clientParameters" type="String"></property>
+                    <property name="clientPostParameters" type="String">name:value</property>
+                </properties>
+            </transport>
+        </input>
+    </inputs>
+    <outputs>
+        <output clusterCommand="START" connector="websocket-json-out" connectorLabel="Push JSON to a WebSocket" label="websocket-json-out" name="a5b7a899-c439-4e7e-86cd-20c9f563c9cc" runningState="STARTED" statusDetails="NULL" supportsAllGeoEventDefinitions="true">
+            <adapter uri="com.esri.ges.adapter.outbound/JSON/10.3.0">
+                <properties>
+                    <property name="mimeType" type="String">application/json</property>
+                    <property name="flattenEvents" type="Boolean">true</property>
+                    <property name="keepEventsUnique" type="Boolean">true</property>
+                    <property name="prettyJson" type="Boolean">true</property>
+                    <property name="updateInterval" type="String">1.0</property>
+                </properties>
+            </adapter>
+            <geoEventDefinitionHistory>
+                <guid>9b0c12cf-a34e-4c8f-a18c-66d425449c7d</guid>
+            </geoEventDefinitionHistory>
+            <geoEventsRateRange max="0.0" min="0.0"/>
+            <supportedGeoEventDefinitions/>
+            <transport uri="com.esri.ges.transport.outbound/WebSocket/10.3.0">
+                <properties>
+                    <property name="CLIENT_IDLE_TIMEOUT" type="Integer">600</property>
+                    <property name="URI" type="String">ws://localhost:80/ws</property>
+                    <property name="PATH" type="String">/geofon</property>
+                    <property name="MODE" type="String">SERVER</property>
+                    <property name="PROTOCOL" type="String">input</property>
+                </properties>
+            </transport>
+        </output>
+        <output clusterCommand="START" connector="esri-out-json-fs-update" connectorLabel="Update a Feature" label="geofon-fs-out" name="geofon-fs-out" runningState="STARTED" statusDetails="NULL" supportsAllGeoEventDefinitions="true">
+            <adapter uri="com.esri.ges.adapter.outbound/JSON/10.3.0">
+                <properties>
+                    <property name="mimeType" type="String">application/json</property>
+                    <property name="flattenEvents" type="Boolean">true</property>
+                    <property name="keepEventsUnique" type="Boolean">true</property>
+                    <property name="prettyJson" type="Boolean">false</property>
+                    <property name="updateInterval" type="String">1</property>
+                </properties>
+            </adapter>
+            <geoEventDefinitionHistory>
+                <guid>9b0c12cf-a34e-4c8f-a18c-66d425449c7d</guid>
+            </geoEventDefinitionHistory>
+            <geoEventsRateRange max="0.0" min="0.0"/>
+            <supportedGeoEventDefinitions/>
+            <transport uri="com.esri.ges.transport.outbound/FeatureService/10.3.0">
+                <properties>
+                    <property name="serviceName" type="ArcGISFeatureService">GeoEvent_Earthquake</property>
+                    <property name="append" type="Boolean">false</property>
+                    <property name="path" type="ArcGISFolder">/</property>
+                    <property name="trackIDField" type="ArcGISField">GUID</property>
+                    <property name="featureLifeSpan" type="Integer">1440</property>
+                    <property name="cleanupTimeField" type="ArcGISField">Date</property>
+                    <property name="layerIndex" type="ArcGISLayer">0</property>
+                    <property name="cleanupFrequency" type="Integer">20</property>
+                    <property name="cleanupFeatures" type="Boolean">false</property>
+                    <property name="maximumTransactionSize" type="Integer">500</property>
+                    <property name="datastore" type="ArcGISConnection">07218b71-f333-4d42-8d4f-febb77bec43a</property>
+                </properties>
+            </transport>
+        </output>
+    </outputs>
+    <geoEventDefinitions>
+        <geoEventDefinition guid="40b29674-e9ae-40f7-9492-8ebc454e0bda" name="GFZ_Potsdam_Earthquake_Bulletin_-_last_20_events" owner="auto-generated/com.esri.ges.adapter.inbound.RSS/10.2.2" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="ffbc0bcb-eeee-4ec0-9d40-d72d6f12a66f" name="GFZ_Potsdam_Earthquake_Bulletin_-_last_20_events" owner="auto-generated/com.esri.ges.adapter.inbound.RSS/10.3.0" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="9b0c12cf-a34e-4c8f-a18c-66d425449c7d" name="GFZ_Potsdam_Earthquake_Bulletin" owner="arcgis" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="GUID" type="String" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>TRACK_ID</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Date" type="Date" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>TIME_START</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Depth" type="Integer" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>GEOMETRY</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Magnitude" type="Double" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="ada93321-091a-4995-a044-fc8763eb33cb" name="Geofon-poll-in" owner="auto-generated/com.esri.ges.adapter.inbound.Generic-JSON/10.2.2" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="GUID" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Date" type="Double" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Depth" type="Double" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>GEOMETRY</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="723ece8f-0b8a-499b-a394-3e5e1f5711c1" name="geofon_date" owner="GEOFON:date_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="99d89b49-4742-4953-b463-78a1530e5132" name="geofon_date" owner="GEOFON:date_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="8f200610-050d-456f-8f4c-a3029bbd1702" name="geofon_date_lat" owner="GEOFON:lat_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="68584b74-dffb-4bba-b71c-ae394feb0ef0" name="geofon_date_lat" owner="GEOFON:lat_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="6f734829-09a1-4bd0-8502-0c8cfd2d7d3b" name="geofon_date_lat_lon" owner="GEOFON:lon_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="2c89ad88-36ac-41af-9015-6d148d5ab6aa" name="geofon_date_lat_lon" owner="GEOFON:lon_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="cd9f0fe7-b8e1-4805-bc9f-ed637437d938" name="geofon_date_lat_lon_depth" owner="GEOFON:depth_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="0fc3dcc0-1a03-4fa1-aecb-1e2ace25b19e" name="geofon_date_lat_lon_depth" owner="GEOFON:depth_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="f7fa9a98-c4b5-4b35-ad33-2e38d4e0efc6" name="geofon_date_lat_lon_depth_units" owner="GEOFON:depth_units_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="810dcd37-d188-4c76-b6bb-a8b08d2f44d5" name="geofon_date_lat_lon_depth_units" owner="GEOFON:depth_units_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="6fd73832-4376-4679-8f90-778c1c89228e" name="geofon_date_lat_lon_depth_units_status" owner="GEOFON:status_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="8ccd31ee-d438-4e11-a09c-55460011d146" name="geofon_date_lat_lon_depth_units_status" owner="GEOFON:status_token" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="89c2e32c-590e-41e1-a8e3-22d8693f366d" name="geofon_date_lat_lon_depth_units_status_geometry" owner="GEOFON:to_geometry" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="a09594c2-01bf-4d12-bbc4-18bff7cdacd4" name="geofon_date_lat_lon_depth_units_status_geometry" owner="GEOFON:to_geometry" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="12e9a3ef-8adc-4be2-b748-5016479299b9" name="geofon_date_lat_lon_depth_units_status_geometry_magni" owner="GEOFON:acabada9-fd69-4383-83ed-92b1ce750dcf" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="description" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="guid" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geofon_mt" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="date" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lat" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="lon" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="depth_units" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="magni" type="Double" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+        <geoEventDefinition guid="fc3419ce-d4b4-4c23-aba3-9fc8bc0f68bf" name="geofon" owner="arcgis" accessType="editable">
+            <fieldDefinitions>
+                <fieldDefinition name="GUID" type="String" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>TRACK_ID</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Title" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Link" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Date" type="Date" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>TIME_START</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Geometry" type="Geometry" cardinality="One">
+                    <fieldDefinitionTag>
+                        <name>GEOMETRY</name>
+                    </fieldDefinitionTag>
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Depth" type="Integer" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+                <fieldDefinition name="Status" type="String" cardinality="One">
+                    <fieldDefinitions/>
+                </fieldDefinition>
+            </fieldDefinitions>
+        </geoEventDefinition>
+    </geoEventDefinitions>
+    <tags/>
+    <connectors>
+        <connector accessType="editable" label="Push JSON to a WebSocket" name="websocket-json-out" type="outbound">
+            <adapter uri="com.esri.ges.adapter.outbound/JSON/10.3.0"/>
+            <defaultName>websocket-json-out</defaultName>
+            <description>Push JSON to a WebSocket</description>
+            <properties>
+                <advanced/>
+                <hidden/>
+                <shown>
+                    <property default="1.0" label="Update Interval (seconds)" name="updateInterval" source="adapter"/>
+                    <property default="true" label="Generate flat JSON" name="flattenEvents" source="adapter"/>
+                    <property default="application/json" label="MIME Type" name="mimeType" source="adapter"/>
+                    <property default="false" label="Formatted JSON" name="prettyJson" source="adapter"/>
+                    <property default="false" label="Enforce Unique TrackID" name="keepEventsUnique" source="adapter"/>
+                    <property default="SERVER" label="Mode" name="MODE" source="transport"/>
+                    <property default="/ws" label="URL Path" name="PATH" source="transport"/>
+                    <property default="ws://localhost:80/ws" label="Remote server web socket URI (Client Mode)" name="URI" source="transport"/>
+                    <property default="input" label="Protocol (Client Mode)" name="PROTOCOL" source="transport"/>
+                    <property default="600" label="Idle Timeout" name="CLIENT_IDLE_TIMEOUT" source="transport"/>
+                </shown>
+            </properties>
+            <transport uri="com.esri.ges.transport.outbound/WebSocket/10.3.0"/>
+        </connector>
+    </connectors>
+</template>
