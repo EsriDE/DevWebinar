@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+	
+    <script type="text/javascript">
+        var dojoConfig = {
+          "async": true,
+          "parseOnLoad" : true
+        };
+    </script>
+    <script src="http://js.arcgis.com/3.12compact/"></script>
+    <script>
+        require(["./js/MobileApp.js"], function(MobileApp) {
+          window.app = new MobileApp();
+        });
+    </script>
+	<style>
+	html, body, #mapDiv { height: 100%; width: 100%; margin: 0; padding: 0; }
+	</style>
+	
+</head>
+<body class="claro">
+    <div id="output"></div>
+    <div id="mapDiv"></div>
+</body>
+</html>

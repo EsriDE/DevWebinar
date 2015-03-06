@@ -1,0 +1,92 @@
+/* CTT Mobile Optimization */
+
+@media screen and (max-width: 640px) {
+	#ConcertTellingTweets {
+		font-size:x-small;
+	}
+
+	#inputContainer {
+		font-size:xx-small;
+	}
+
+	.jimu-dockable-panel{
+	  width: 100px!important;
+	}
+
+	.jimu-widget-frame{
+	  padding:1px!important;
+	}
+
+	#inputContainer .dijitTextBox {
+		width:9em;
+	}
+
+	#inputContainer .dijitInputField {
+		padding:1px;
+	}
+
+	#venueCounterNode {
+		margin:5px 0px;
+	}
+	
+	#showConcertsButton {
+		width:70px;
+		font-size:xx-small;
+		white-space:normal;
+	}
+
+	#sortChooserNode {
+		margin:10px 0px;
+	}
+	
+	#sortChooserNode label::after {
+	    content:"\000A";
+	    white-space: pre;
+	}
+
+	#venueAccordionContainerNode .dijitAccordionTitle {
+		padding:0px;
+	}
+
+	#venueAccordionContainerNode .dijitSelected {
+		font-size:100%;
+	}
+
+	#ConcertTellingTweets .dijitAccordionInnerContainerSelected {
+	    background-color: #A7C044;
+	    border-color: #FFFFFF;
+	    position: fixed;
+	    top: 81px;
+	    left: 46px;
+	    width: 226px;
+	}
+
+	#ConcertTellingTweets .dijitAccordionInnerContainerSelected .goodTweetsQuotient {
+		display:inline-block;
+	    font-style:italic;
+	    font-size:75%;
+	}
+	#ConcertTellingTweets .goodTweetsQuotient {
+		display:inline-block;
+	    font-style:italic;
+	    font-size:75%;
+		display: none;
+	}
+
+	.dijitAccordionContainer-dijitContentPane {
+		width:300px!important;
+	}
+
+	.dijitAccordionInnerContainerSelected .mediaSection {
+		display:none;
+	}
+
+	.dijitAccordionInnerContainerSelected .dijitAccordionChildWrapper {
+		height:100px!important;
+	}
+
+	#dijit__WidgetBase_0 {
+		display:none;
+	}
+
+}

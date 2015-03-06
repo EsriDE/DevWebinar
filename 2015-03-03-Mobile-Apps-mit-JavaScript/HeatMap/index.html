@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>FeatureLayer using HeatmapRenderer</title>
+  <link rel="stylesheet" href="//js.arcgis.com/3.12/dijit/themes/claro/claro.css">
+  <link rel="stylesheet" href="//js.arcgis.com/3.12/esri/css/esri.css">
+  <style>
+    html, body, #map {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+  <script src="//js.arcgis.com/3.12/"></script>
+  <script>
+    var map;
+    require([
+        "esri/layers/FeatureLayer",
+        "esri/map",
+        "esri/renderers/HeatmapRenderer",
+		"esri/renderers/ScaleDependentRenderer",
+		"esri/renderers/SimpleRenderer",
+		"esri/symbols/SimpleMarkerSymbol",
+		"dojo/_base/Color",
+		"esri/dijit/PopupMobile",
+		"dojo/dom-construct",
+        "dojo/domReady!"
+      ],
+      function (FeatureLayer, Map, HeatmapRenderer, ScaleDependentRenderer, SimpleRenderer, SimpleMarkerSymbol, Color, PopupMobile, domConstruct){
+
+	    var popup = new PopupMobile(null, domConstruct.create("div"));
+        map = new Map("map", {
+          basemap: "gray",
+          center: [-87.62, 41.89],
+          zoom: 9,
+          minZoom: 9,
+          maxZoom: 15
+        });
+
+		var serviceURL = "http://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/ChicagoCrime/FeatureServer/0";
+		var featureLayerOptions = {
+		  mode: FeatureLayer.MODE_SNAPSHOT,
+		  outFields: ["*"]
+		};
+		var featureLayer = new FeatureLayer(serviceURL, featureLayerOptions);
+		
+		var heatmapRenderer = new HeatmapRenderer();
+		var markerSym = new SimpleMarkerSymbol('circle', 10, null, new Color([255,0,0, 0.75]));
+		var simpleRenderer = new SimpleRenderer(markerSym);
+		
+		var params = {rendererInfos: [{
+		  "renderer": heatmapRenderer,
+		  "minZoom": 9,
+		  "maxZoom": 11
+		},{
+		  "renderer": simpleRenderer,
+		  "minZoom": 12,
+		  "maxZoom": 15
+		}]};
+		
+		var scaleDependentRenderer = new ScaleDependentRenderer(params);
+		featureLayer.setRenderer(scaleDependentRenderer);
+		map.addLayer(featureLayer);
+      });
+  </script>
+  </head>
+  <body>
+    <div id="map"></div>
+  </body>
+</html>
